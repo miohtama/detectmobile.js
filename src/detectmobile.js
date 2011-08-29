@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * @singleton
  * 
@@ -62,63 +60,53 @@ var detectmobile = {
     forceMobileParameter : "force-mobile",
 
     //////////////////////////                  
-		 
+                 
     /**
      * Perform a redirect to a mobile site if needed
-     */	
-    process : function() {     	
+     */ 
+    process : function() {      
     
         var currentURL = window.location.href;
-	
-	var parameters = this.splitURLParameters(currentURL);
-	
-	var oldCookie = this.readCookie(this.cookieName);
-	
-        if(this.forceWebParameter in parameter) {
+        
+        var parameters = this.splitURLParameters(currentURL);
+        
+        var oldCookie = this.readCookie(this.cookieName);
+        
+        if(this.forceWebParameter in parameters) {
            this.createCookie(this.cookieName, "true");
-	   // No longer redirects
-	   return;
-	}
-	
-        if(this.forceMobileParameter in parameter) {
-           this.eraseCookie(this.cookieName);
-           // No longer redirects
+           // No longer redirects to mobile
            return;
-        }	
-	
-	// Then check if we need to stick on the web site
-	// based on cookie
-	if(oldCookie) {
-	    return;
-	}
-	
-	// Check if we are already on the mobile domain
-	// - no action needed
-	if(this.isOnMobileSite()) {
-	    return;	
-	}
-		
-	// If we are not on the mobile site then we must be on the web site...
-	
-	// Do the feature detection
+        }
+        
+        if(this.forceMobileParameter in parameters) {
+           this.eraseCookie(this.cookieName);
+           // Stay on the mobile site
+           return;
+        }       
+        
+        // Then check if we need to stick on the web site
+        // based on cookie
+        if(oldCookie) {
+            return;
+        }
+        
+        // Check if we are already on the mobile domain
+        // - no action needed
+        if(this.isOnMobileSite()) {
+            return;     
+        }
+                
+        // If we are not on the mobile site then we must be on the web site...
+        
+        // Do the feature detection
         if(this.detectMobile()) {
-	     // Based on the feature deteciton this looks like we are on the mobile site
-	     var url = this.getRedirectTarget("mobile", currentURL);
-	     this.performRedirect(url);
-	}
-	
+             // Based on the feature deteciton this looks like we are on the mobile site
+             var url = this.getRedirectTarget("mobile", currentURL);
+             this.performRedirect(url);
+        }
+        
     },
     
-    /**
-     * Set a sticky cookie and does a redirect to the website
-     */
-    forceWebSite : function(currentURL) {    		
-	this.createCookie(this.cookieName, "true");			
-    },
-    
-    forceMobileSite : function(currentURL) {
-    	this.eraseCookie(this.cookieName);
-    },
     
     /**
      * Rewrite URL for moving from the website to a mobile site or vice versa.
@@ -131,21 +119,22 @@ var detectmobile = {
      * @param {String} url The current URL 
      */
     getRedirectTarget : function(mode, url) {
-    	if(this.callback) {
-	       url = this.callback(mode, url);
-	} else {
-	       if(mode == "mobile") {
-	               url = this.defaultMobileURL;
-	       } else if(mode == "web") {
-	       	       url = this.defaultWebURL;
-	       }
-	}
+    	
+	var newURL = null;
 	
-	if(!url) {
-	       throw "Cannot redirect to " + mode + " because target URL cannot be resolved by detectmobile.js";
-	}
-	
-	return url;
+        if(this.redirectCallback) {
+               newURL = this.redirectCallback(mode, url);
+        } else {
+               if(mode == "mobile") {
+                       newURL = this.defaultMobileURL;
+               } 
+        }
+        
+        if(!newURL) {
+               throw "Cannot redirect to " + mode + " because target URL cannot be resolved by detectmobile.js";
+        }
+        
+        return newURL;
     },
     
     /**
@@ -154,27 +143,62 @@ var detectmobile = {
      * @param {Object} url
      */
     performRedirect : function(url) {
-    	
-	if(url == window.location.href) {
-	    // Force reload
-	    window.location.reload();
-	    return;
-	}
-	
-	window.location = url;
-	
+        
+        if(url == window.location.href) {
+            // Force reload
+            window.location.reload();
+            return;
+        }
+        
+        window.location = url;
+        
     },
     
     /**
-     * Helper function to rewrite new domain name to URLs.
+     * Helper function to rewrite domain name to URLs.
      * 
      * E.g. site.com -> m.site.com
      * 
-     * @param {String} url
-     * @param {String} newDomain
+     * Port part is not touched in the domain name: site.com:8080 -> m.site.com:8080. 
+     * 
+     * @param {String} url Full http/https URL
+     * 
+     * @param {String} newDomain New domain name to be injected, with optional 
+     * 
+     * @return {String} URL where domain part has been replaced by newDomain
      */
     replaceDomainName : function(url, newDomain) {
-    	
+        if(url.substring(0, 4) != "http") {
+                throw "Only absolute http/https URLs supported";
+        }
+                
+        var split = url.split("/");
+        
+        if(split.length <2) {
+                throw "Cannot understand:" + url;
+        }
+        
+        // http [0] / [1] / domain : port [2] /
+        var host = split[2];
+	        
+        hostparts = host.split(":");
+        
+        if(hostparts.length > 1) {
+                hostparts = [newDomain, hostparts[1]]
+        } else {
+                hostparts = [newDomain];
+        }
+        
+        var host = hostparts.join(":");
+        
+        var newsplit = [ split[0], split[1], host ];
+        
+        for(var i=3; i<split.length; i++) {
+                newsplit.push(split[i]);
+        }
+        
+        return newsplit.join("/");
+                        
     },
       
     /** Add new URL variables safely with or without existing '?' character */
@@ -288,12 +312,13 @@ var detectmobile = {
      * @return True if the current browser is a mobile browser
      */ 
     detectMobile: function(){
-	var dimensions  = this.getScreenDimensions();
-	if(dimensions.width <= this.thresholdWidth) {
-	       return true;
-	}
-	
-	return false;
+        var dimensions  = this.getScreenDimensions();
+	alert("testing screen width:" + dimensions.width);
+        if(dimensions.width <= this.thresholdWidthInPixels) {
+               return true;
+        }
+        
+        return false;
     },
     
     /**
@@ -302,10 +327,10 @@ var detectmobile = {
      * XXX: Add DPI detection http://stackoverflow.com/questions/476815/can-you-access-sceen-displays-dpi-settings-in-a-javascript-function
      */
     getScreenDimensions : function() {
-    	return {
-		width : window.screen.availWidth,
-		height : window.screen.availHeight
-	}
+        return {
+                width : window.screen.availWidth,
+                height : window.screen.availHeight
+        }
     },
     
     /**
@@ -317,17 +342,18 @@ var detectmobile = {
      * @return true if the 
      */
     isOnMobileSite : function() {
-    	var domainName = this.window.location.hostname;
-        var parts = domainName.split(".");
+        var domainName = window.location.hostname;
 	
-	for(var i=0; i<parts; i++) {
-	    for(var l=0; l<this.mobileSiteDomainIdentifies; l++) {
-		if(parts[i] == this.mobileSiteDomainIdentifies[l]) {
-			return true;
-		}	
-	    }
-	}		
-	return false;
+        var parts = domainName.split(".");
+        
+        for(var i=0; i<parts.length; i++) {
+            for(var l=0; l<this.mobileSiteDomainIdentifiers.length; l++) {
+                if(parts[i] == this.mobileSiteDomainIdentifiers[l]) {
+                        return true;
+                }       
+            }
+        }               
+        return false;
     }
 
        

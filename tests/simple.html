@@ -1,0 +1,50 @@
+<html>
+	<!-- Run some simple manual tests for detectmobile.js -->
+	<head>
+		<script src="../src/detectmobile.js"></script>
+
+                <!-- test domain name rewrites -->
+                <script>
+                        var url = detectmobile.replaceDomainName("http://www.foobar.com:9999", "m.barbar.com");
+			if(url != "http://m.barbar.com:9999") {
+				throw "Failed replace domain name:" + url;
+			}
+
+                        var url = detectmobile.replaceDomainName("http://www.foobar.com", "m.barbar.com");
+                        if(url != "http://m.barbar.com") {
+                                throw "Failed replace domain name:" + url;
+                        }
+
+                </script>
+
+                <!-- test mobile site detection -->
+                <script>
+                        if(window.location.href.indexOf("m.localhost") >= 0) {
+				if(!detectmobile.isOnMobileSite()) {
+					alert("Failed in domain name mobile site detection");
+					throw "die";
+				}
+			}
+                </script>
+
+                <!-- test redirect callback -->
+		<script>
+			detectmobile.redirectCallback = function(mode, url) {
+				var mobileURL = detectmobile.replaceDomainName(url, "m.localhost");
+				alert("Going to mobile URL:" + url);
+				return mobileURL;
+			}
+			detectmobile.process();
+		</script>
+	</head>
+	
+	<body>
+		<script>
+			if(window.location.hostname == "m.localhost") {
+				alert("This is mobile");
+			} else {
+				alert("This is web");
+			}
+		</script>
+	</body>
+</html>
