@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{title}</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+  <link rel="shortcut icon" type="image/ico" href="favicon.ico" />
+  <link rel="stylesheet" href="resources/css/reset.css" type="text/css" />
+  <link rel="stylesheet" href="resources/css/docs-ext.css" type="text/css" />
+  <link rel="stylesheet" href="resources/css/scrollbars.css" type="text/css" />
+  <link rel="stylesheet" href="resources/css/viewport.css" type="text/css" />
+  <link rel="stylesheet" href="prettify/prettify.css" type="text/css" />
+
+  <!--[if IE]>
+    <link rel="stylesheet" href="resources/css/ie.css" type="text/css" />
+  <![endif]-->
+
+  <script type="text/javascript" charset="utf-8" src="http://cdn.sencha.io/ext-4.0.2a/ext-all.js"></script>
+  <script type="text/javascript" src="prettify/prettify.js"></script>
+
+  <script type="text/javascript" src="app.js"></script>
+
+  <script type="text/javascript" src="output/tree.js"></script>
+  <script type="text/javascript" src="output/searchData.js"></script>
+
+</head>
+<body id="ext-body" class="iScroll">
+    <div id="loading"><span class="title"></span><span class="logo"></span></div>
+    <form id="history-form" class="x-hide-display">
+        <input type="hidden" id="x-history-field" />
+        <iframe id="x-history-frame"></iframe>
+    </form>
+    {guides}
+    {categories}
+    <div id="footer-content" style="display: none">{footer}</div>
+</body>
+</html>
