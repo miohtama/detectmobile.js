@@ -1,0 +1,1 @@
+Docs.classData = {"children":[{"text":"detectmobile","iconCls":"icon-singleton","leaf":true,"url":"/api/detectmobile"}],"text":"API Documentation","iconCls":"icon-docs","id":"apidocs"};Docs.icons = {"/api/detectmobile":"icon-singleton"};

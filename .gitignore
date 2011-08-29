@@ -1,0 +1,8 @@
+docs/apidocs/*
+docs/template/extjs
+ext-4.0.2a*
+.DS_Store
+.sass-cache
+.tmp*
+
+
