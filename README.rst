@@ -5,8 +5,8 @@ Introduction
 
 ``detectmobile.js`` allows you create intelligent mobile redirects in HTTP cache safe manner.
 
-* Mobile detection is based on the screen size: you get "devices smaller than this diameter" which
-  is actually the only thing you want to know to send visitors to the small screen optimized site.
+* Mobile detection is based on the screen size: you use "screens smaller than this diameter" 
+  threshold which is actually the only thing you want to know to send visitors to the small screen optimized site.
   
 * detectmobile.js is cache friendly, as it is not doing any cache varying by HTTP user agent header
   or HTTP redirects. Thus, you can safely use any static and anonymous caching with detectmobile.js.
@@ -40,6 +40,8 @@ Using a Javascript feature based detection over HTTP User-agent header based det
 
 * Compatible with any programming language or framework (Python, PHP, 
   C#, ASP.NET, Java, even static HTML files...)
+  
+* You can actually undestand the codebase  
 
 Requirements
 -------------
@@ -140,7 +142,7 @@ Use the following code on the **web site** to make browsers go to the **mobile w
 Further info
 ====================
 
-See the API documentation.
+See the `API documentation `GitHub pages <http://miohtama.github.com/detectmobile>`_.
 
 Compatibility
 ---------------
@@ -185,39 +187,10 @@ History
 
 This code was isolated from `Mobilize.js <https://github.com/mobilizejs/mobilize.js>`_.
 
-Tests
-------
-
-Below are short instructions for simple manual testing.
-
-Add entry::
-
-        m.localhost 127.0.0.1
-        
-.. to your */etc/hosts* file (UNIX).        
-
-Start HTTP server in the project folder::
-
-        python -m SimpleHTTPServer 7777
-        
-And then open with desktop browser::
-
-        http://localhost:7777/tests/simple.html        
-        
-And another::
-
-        http://m.localhost:7777/tests/simple.html        
-        
-Start iOS emulator and try::
-        
-        http://localhost:7777/tests/simple.html                
-                      
-You should end up to *m.localhost:7777/tests/simple.html* via Javascript redirect.                      
-
 Documentation
 ---------------
 
-Docs are available at xxx.com.
+Generated API documents are available at `GitHub pages <http://miohtama.github.com/detectmobile>`_.
 
 Building API documentation
 ==============================
@@ -259,6 +232,54 @@ application tree to the source code.
 More info
 
 * https://github.com/nene/jsduck
+
+Publishing API docs on Github
+==================================
+
+You need to create another clone of the repo::
+
+         git clone git@github.com:miohtama/detectmobile.js.git detectmobiledocs
+         cd detectmobiledocs
+         git checkout -b gh-pages origin/gh-pages
+         cp -r ../detectmobile.js/docs/apidocs/* .
+         cp ../detectmobile.js/.gitignore . # Don't commit .sass cache files
+         git add -A
+         git commit -m "Updated API docs"
+         git push
+
+More info
+
+* http://pages.github.com/
+
+Tests
+------
+
+Below are short instructions for simple manual testing.
+
+Add entry::
+
+        m.localhost 127.0.0.1
+        
+.. to your */etc/hosts* file (UNIX).        
+
+Start HTTP server in the project folder::
+
+        python -m SimpleHTTPServer 7777
+        
+And then open with desktop browser::
+
+        http://localhost:7777/tests/simple.html        
+        
+And another::
+
+        http://m.localhost:7777/tests/simple.html        
+        
+Start iOS emulator and try::
+        
+        http://localhost:7777/tests/simple.html                
+                      
+You should end up to *m.localhost:7777/tests/simple.html* via Javascript redirect.                      
+
 
 Author
 --------
