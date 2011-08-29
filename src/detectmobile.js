@@ -119,9 +119,9 @@ var detectmobile = {
      * @param {String} url The current URL 
      */
     getRedirectTarget : function(mode, url) {
-    	
-	var newURL = null;
-	
+        
+        var newURL = null;
+        
         if(this.redirectCallback) {
                newURL = this.redirectCallback(mode, url);
         } else {
@@ -165,9 +165,11 @@ var detectmobile = {
      * 
      * @param {String} newDomain New domain name to be injected, with optional 
      * 
+     * @param {Boolean} prefix Append newDomain to the beginning of the domain name with dot separation, instead of replacing the old domain
+     * 
      * @return {String} URL where domain part has been replaced by newDomain
      */
-    replaceDomainName : function(url, newDomain) {
+    replaceDomainName : function(url, newDomain, prefix) {
         if(url.substring(0, 4) != "http") {
                 throw "Only absolute http/https URLs supported";
         }
@@ -180,8 +182,12 @@ var detectmobile = {
         
         // http [0] / [1] / domain : port [2] /
         var host = split[2];
-	        
+                
         hostparts = host.split(":");
+        
+        if(prefix) {
+                newDomain = newDomain + "." + hostparts[0];
+        } 
         
         if(hostparts.length > 1) {
                 hostparts = [newDomain, hostparts[1]]
@@ -200,6 +206,7 @@ var detectmobile = {
         return newsplit.join("/");
                         
     },
+ 
       
     /** Add new URL variables safely with or without existing '?' character */
     addURLParameter : function(aURL, aNewVar){
@@ -342,7 +349,7 @@ var detectmobile = {
      */
     isOnMobileSite : function() {
         var domainName = window.location.hostname;
-	
+        
         var parts = domainName.split(".");
         
         for(var i=0; i<parts.length; i++) {

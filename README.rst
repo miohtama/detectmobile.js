@@ -119,7 +119,7 @@ Add the following code to your mobile site to have a backlink to the website.
 You need to add ``force-web`` HTTP GET query parameter to create a sticky cookie
 which will make the mobile browser stay in the web version.
 
-Use the following code on the mobile site to make browsers go to the full web version::
+Use the following code on the **mobile site** to make browsers go to the **full web version**::
 
         <a href="yoursite.com/page?force-web">
                 Full website version
@@ -131,7 +131,7 @@ Link to a mobile site
 You need to add ``force-mobile`` HTTP GET query parameter to clear any sticky cookies
 which will make the mobile browser stay in the web version.
 
-Use the following code on the web site to make browsers go to the mobile web version::
+Use the following code on the **web site** to make browsers go to the **mobile web version**::
 
         <a href="m.yoursite.com/page?force-mobile">
                 Full site
@@ -149,6 +149,15 @@ All HTML capable mobile browsers are supported.
 
 Opera Mini is supported. 
 Other thin clients are also supported if they execute DOM on ready / window loaded Javascript events.   
+
+Detection method
+==================
+
+In versio 0.1 we do a brute check of the screen width in the pixels. Everything 960 pixels wide and narrower
+are considered as mobile screens. This covers iPhone, iPad, current Android phones and tables, etc.
+
+However the plan is to include DPI detection using CSS trick for the future versions to support to
+ignore PC screens of 800 pixels wide.
 
 Impact on the caching
 ------------------------
