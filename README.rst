@@ -142,7 +142,7 @@ Use the following code on the **web site** to make browsers go to the **mobile w
 Further info
 ====================
 
-See the `API documentation `GitHub pages <http://miohtama.github.com/detectmobile>`_.
+See the `API documentation `GitHub pages <http://miohtama.github.com/detectmobile.js/#/api/detectmobile>`_.
 
 Compatibility
 ---------------
@@ -190,7 +190,7 @@ This code was isolated from `Mobilize.js <https://github.com/mobilizejs/mobilize
 Documentation
 ---------------
 
-Generated API documents are available at `GitHub pages <http://miohtama.github.com/detectmobile>`_.
+API documents are available at `GitHub Pages <http://miohtama.github.com/detectmobile.js/#/api/detectmobile>`_.
 
 Building API documentation
 ==============================
