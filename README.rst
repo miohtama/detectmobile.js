@@ -214,6 +214,31 @@ Start iOS emulator and try::
                       
 You should end up to *m.localhost:7777/tests/simple.html* via Javascript redirect.                      
 
+Documentation
+---------------
+
+Docs are available at xxx.com.
+
+Building API documentation
+==============================
+
+Installing prerequisitements (OSX)::
+
+        sudo gem install rdiscount json parallel rspec
+
+Installing JSDuck::
+
+        # --pre installs 2.0 beta version
+        sudo gem install --pre jsduck
+                              
+Building docs with JSDuck::
+                
+        bin/build-docs.sh
+
+More info
+
+* https://github.com/nene/jsduck
+
 Author
 --------
 
