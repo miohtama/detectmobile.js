@@ -230,10 +230,31 @@ Installing JSDuck::
 
         # --pre installs 2.0 beta version
         sudo gem install --pre jsduck
-                              
+
+Get ExtJS::
+
+        wget http://extjs.cachefly.net/ext-4.0.2a-gpl.zip
+        unzip ext-4.0.2a-gpl.zip  # takes time here....
+        mkdir docs/template/extjs
+        # Create dummy entry - actually we load everything
+        # from Sencha CDN in custom index.html
+        cp ext-4.0.2a/ext-all.js docs/template/extjs
+        
+
+SASS it::
+       
+        sudo gem install compass
+        compass compile doc/template/resources/sass
+                                                      
 Building docs with JSDuck::
                 
         bin/build-docs.sh
+
+JSDuck has hardcored branding for Sencha. 
+To get rid of this, the hacked file list is: index.html, Viewport.js.
+ 
+JSDuck did not offer customization hooks, so I had to dump whole ExtJS Doc viewer
+application tree to the source code.
 
 More info
 
@@ -249,4 +270,8 @@ Author
 License
 --------
 
-MIT 
+Code: MIT.
+
+The generated API documentation falls under GPL 3 license as it has been linked with Ext JS 4.0.
+
+ 

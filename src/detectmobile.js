@@ -1,27 +1,46 @@
 /**
+ * @class detectmobile
  * @singleton
  * 
- * @version 0.1
+ * detectmobile.js - simple mobile redirects with Javascript.
  * 
- * detectmobile.js - simple mobile redirects with Javascript
- *
+ * This **detectmobile** object contains all configuration variables and methods for 
+ * this micro-framework.
+ * 
+ * {@link detectmobile#process} is the entry point for the processing.
+ * 
+ * Feel free to monkey-patch any functions to make this object suitable for your needs.
+ * 
+ * For more information [visit Github project page](https://github.com/miohtama/detectmobile.js)
+ * 
+ * 
  * @author Mikko Ohtamaa, Jussi Toivola
  *
  */
 var detectmobile = {
     
     /**
-     * Function callback(mode, url) which is called if switch happens.
+     * @type Fuction
      * 
-     * If the 
+     * Function callback(mode, url) which is called when the mobile browser arrives
+     * to the website and must be redirected.
+     * 
+     * This function must return a new URL where {@link detectmobile#performRedirect} will send this browser. 
+     * 
      */
     redirectCallback : null,
 
     /**
-     * Redirect target when the user wants to go the website.
+     * @type String
      * 
-     * Usually the website homepage. For dynamic URL mappins
-     * define redirectCallback() function.
+     * Redirect target where mobile browsers coming to the website land.
+     * 
+     * Example:
+     * 
+     *       detectmobile.defaultMobileURL = "http://m.site.somewhere.else";
+     * 
+     * Usually the website homepage. For dynamic URL mappings
+     * define {@link detectmobile#redirectCallback} function.
      */
     
     defaultMobileURL : null,
@@ -30,6 +49,10 @@ var detectmobile = {
      * @type Array
      * 
      * If any of hostname domain parts matches this list assume we are on a mobile site. 
+     * 
+     * By default detect **m.site.com** and **site.mobi**.
+     * 
+     *
      */
     mobileSiteDomainIdentifiers : ["m", "mobi"],
            
@@ -45,16 +68,22 @@ var detectmobile = {
     thresholdWidthInPixels : 970, // iPhone 4 is 960
     
     /**
+     * @type String
+     * 
      * The cookie name set when we force the mobile browser to stick on the website.
      */
     cookieName : "detectmobile-stick-on-web",
     
     /**
+     * @type String
+     * 
      * HTTP GET query parameter name used to detect forcing the web mode.
      */
     forceWebParameter : "force-web",
 
     /**
+     * @type String
+     * 
      * Use this HTTP GET query parameter name to make browsers come back from the forced web site to the mobile site.
      */
     forceMobileParameter : "force-mobile",
@@ -62,7 +91,12 @@ var detectmobile = {
     //////////////////////////                  
                  
     /**
-     * Perform a redirect to a mobile site if needed
+     * Handle mobile redirection logic.
+     * 
+     * 
+     * Perform a redirect to a mobile site if needed.
+     * Set sticky cookies for website if necessary URL parameters are present.
+     * 
      */ 
     process : function() {      
     
@@ -345,7 +379,7 @@ var detectmobile = {
      * Use domain name based detection - check if the domain name resembles any common 
      * names used for the mobile domains.
      * 
-     * @return true if the 
+     * @return {Boolean} true if the domain or the current window URL looks like it is a mobile site 
      */
     isOnMobileSite : function() {
         var domainName = window.location.hostname;
