@@ -3,25 +3,26 @@
 Introduction
 --------------
 
-``detectmobile.js`` allows you create intelligent mobile redirects in cache safe manner.
+``detectmobile.js`` allows you create intelligent mobile redirects in HTTP cache safe manner.
 
 * Mobile detection is based on the screen size: you get "devices smaller than this diameter" which
-  is actually the thing you want to know to send visitors to the small screen optimized site
+  is actually the only thing you want to know to send visitors to the small screen optimized site.
   
 * detectmobile.js is cache friendly, as it is not doing any cache varying by HTTP user agent header
-
+  or HTTP redirects. Thus, you can safely use any static and anonymous caching with detectmobile.js.
+  
 The script will take care of the task::
 
-        if user is using a mobile browser then 
+        if user is using a mobile browser and comes to your web site then 
                 go to a matching mobile site page
         else
                 stay on the web site        
                 
 With the default settings the script is set up for the following configuration
 
-* Website is hosted in the address ``www.site.com`` or ``site.com``
+* Website is hosted in the address like ``www.site.com`` or ``site.com``
 
-* Mobile site is hosted in the address ``m.site.com``                
+* Mobile site is hosted in the address like ``m.site.com``                
 
 Benefits
 -------------
@@ -43,15 +44,19 @@ Using a Javascript feature based detection over HTTP User-agent header based det
 Requirements
 -------------
 
-* You need to be able to control *both* web and mobile site to include new Javascripts
-  in HTML code
+You need to be able to control **both** web and mobile site to include detectmobile.js
+Javascript in HTML code.
    
 Usage
 ------
 
 The Javascript file must be loaded on *both* web site and mobile site.
 
-It is recommended to have this script as the first script of all Javascripts.
+It is recommended to have this script as the first script of all Javascripts,
+as when the mobile browser comes to website the redirect occurs before
+any other media resources are loaded.
+
+::
 
         <html>
                 <head>
@@ -69,9 +74,12 @@ It is recommended to have this script as the first script of all Javascripts.
                 </head>
 
 
-You can also configure ``redirectCallback()`` function doing 
-dynamic mapping of the URLs between mobile site and website pages.
+You can also configure ``detectmobile.redirectCallback()`` function doing 
+dynamic mapping of the URLs between mobile site and website pages, so that
+when mobile browser arrives to a website it will be redirected to the
+corresponding mobile page, `not the site root <http://xkcd.com/869/>`_.
 
+::
 
         <html>
                 <head>

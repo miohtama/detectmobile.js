@@ -313,7 +313,6 @@ var detectmobile = {
      */ 
     detectMobile: function(){
         var dimensions  = this.getScreenDimensions();
-	alert("testing screen width:" + dimensions.width);
         if(dimensions.width <= this.thresholdWidthInPixels) {
                return true;
         }
