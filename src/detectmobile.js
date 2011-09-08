@@ -87,6 +87,16 @@ var detectmobile = {
      * Use this HTTP GET query parameter name to make browsers come back from the forced web site to the mobile site.
      */
     forceMobileParameter : "force-mobile",
+    
+    
+    /**
+     * @type Array
+     * 
+     * Domain names which are stripped from the beginning of the host name when mobile redirect is done.
+     * 
+     * E.g. to prevent giving a name "m.www.site.com".
+     */
+    stripDomains : ["www", "www2", "www3", "m", "mobi"],
 
     //////////////////////////                  
                  
@@ -201,10 +211,14 @@ var detectmobile = {
      * 
      * @param {Boolean} prefix Append newDomain to the beginning of the domain name with dot separation, instead of replacing the old domain
      * 
+     * @param {Boolean} strip true to remove all domain prefixes on the host name before constructing the final URL
+     * 
      * @return {String} URL where domain part has been replaced by newDomain
      */
-    replaceDomainName : function(url, newDomain, prefix) {
-        if(url.substring(0, 4) != "http") {
+    replaceDomainName : function(url, newDomain, prefix, strip) {
+        var i;
+	
+	if(url.substring(0, 4) != "http") {
                 throw "Only absolute http/https URLs supported";
         }
                 
@@ -219,8 +233,18 @@ var detectmobile = {
                 
         hostparts = host.split(":");
         
+	var hostname = hostparts[0];
+	
+	for(i=0; i<this.stripDomains.length; i++) {
+	       var s = this.stripDomains[i];	
+	       if(hostname.indexOf(s + ".") == 0) {
+	       	       hostname = hostname.substring(s.length + 1);
+		       break;
+	       }
+	}
+	
         if(prefix) {
-                newDomain = newDomain + "." + hostparts[0];
+                newDomain = newDomain + "." + hostname;
         } 
         
         if(hostparts.length > 1) {

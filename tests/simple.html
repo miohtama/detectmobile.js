@@ -19,7 +19,12 @@
                         var url = detectmobile.replaceDomainName("http://localhost:9666/site", "m", true);
                         if(url != "http://m.localhost:9666/site") {
                                 throw "Failed replace domain name:" + url;
-                        }			
+                        }		
+			
+                        var url = detectmobile.replaceDomainName("http://www.site.com/page", "m", true, true);
+                        if(url != "http://m.site.com/page") {
+                                throw "Failed replace domain name:" + url;
+                        }       				
 
                 </script>
 

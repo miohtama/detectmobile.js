@@ -87,7 +87,8 @@ corresponding mobile page, `not the site root <http://xkcd.com/869/>`_.
                 <head>
                         <script src="http://xxx.com/detectmobile.js"></script>
                         <script>
-                                try {                                        
+                                try {                       
+                                        // Set up detectmobile.js                 
                                         detectmobile.redirectCallback = function(mode, url) {
                                                 if(mode == "mobile") {
                                                         // We could have arrived directly to a news article
@@ -97,17 +98,22 @@ corresponding mobile page, `not the site root <http://xkcd.com/869/>`_.
                                                         // This example has some URL path for the article
                                                         // on both site.com and m.site.com, just different domain name.
                                                         // But you could any kind of URL rewrite here. 
-                                                        return detectmobile.redirectDomainName(url, "m.site.com");
-                                                }
+                                                        return detectmobile.replaceDomainName(url, "m", true, true);
+                                                } 
                                                 
                                                 // Take no action
                                                 return url;
                                         }
-                                                                                
+                                                                 
+                                
+                                        // Execute mobile redirect                                             
                                         detectmobile.process();                                
                                 } catch(e) {
                                         // Make sure that in the fault modes
                                         // we do not interrupt execution of other Javascript code
+                                        if(console && console.exception) {
+                                                console.exception(e);
+                                        }
                                 }
                         </script>
                 </head>
