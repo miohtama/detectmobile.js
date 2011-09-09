@@ -72,7 +72,7 @@ var detectmobile = {
      * 
      * The cookie name set when we force the mobile browser to stick on the website.
      */
-    cookieName : "detectmobile-stick-on-web",
+    cookieName : "detectmobilesticky",
     
     /**
      * @type String
@@ -378,7 +378,13 @@ var detectmobile = {
      */ 
     detectMobile: function(){
         var dimensions  = this.getScreenDimensions();
-        if(dimensions.width <= this.thresholdWidthInPixels) {
+
+        // Screen can be in landscape or portrait mode
+	// We want to use the longer dimension (width in landscape)
+	
+	var length = Math.max(dimensions.width, dimensions.height);
+
+        if(length <= this.thresholdWidthInPixels) {
                return true;
         }
         

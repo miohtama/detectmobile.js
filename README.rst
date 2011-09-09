@@ -133,17 +133,17 @@ Use the following code on the **mobile site** to make browsers go to the **full 
                 Full website version
         </a>
                
+This will use Javascript to set a cookie called ``detectmobilesticky`` (configurable)
+on *yoursite.com*. Whenever the cookie is prevent, the automatic mobile redirect process
+is suspended. 
+               
 Link to a mobile site
 ======================
 
-You need to add ``force-mobile`` HTTP GET query parameter to clear any sticky cookies
-which will make the mobile browser stay in the web version.
+XXX: TODO
 
-Use the following code on the **web site** to make browsers go to the **mobile web version**::
-
-        <a href="m.yoursite.com/page?force-mobile">
-                Full site
-        </a>        
+This link will clear the sticky cookie and returning clients will 
+automatically redirect to mobile site once again. 
 
 Further info
 ====================
@@ -179,9 +179,22 @@ This cookie is used by Javascript only. Whether it is present or not should not 
 Varnish
 =======
 
-Below is an example of configuring Varnish to strip out this cookie from the backend requests::
+Below is an example of configuring Varnish to strip out this cookie from the backend requests.
 
-        TODO
+We do not want the sticky mobile cookie to mess the backend caching. 
+This cookie is only corcern of the client (Javascript) and thus should not be visible on the server-side code::
+
+        sub vcl_recv {
+            # Remove cookie detectmobilesticky
+            set req.http.cookie = regsub(req.http.cookie,"detectmobilesticky=[^;]*;?( |$)","");
+        
+            # Remove the cookie header if it's empty after cleanup
+            if (req.http.cookie ~ "^ *$") {
+                remove req.http.cookie;
+            }
+        }
+
+This snippet was created using fabulous `cookie-stripper.sh <http://kristianlyng.wordpress.com/2010/08/13/stripping-cookies-with-vcl>`_.
 
 Questions & support
 ---------------------
