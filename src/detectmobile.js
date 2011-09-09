@@ -121,17 +121,15 @@ var detectmobile = {
            // No longer redirects to mobile
            return;
         }
-        
-        if(this.forceMobileParameter in parameters) {
-           this.eraseCookie(this.cookieName);
-           // Stay on the mobile site
-           return;
-        }       
-        
+                
         // Then check if we need to stick on the web site
         // based on cookie
         if(oldCookie) {
-            return;
+	    if (this.forceMobileParamter in parameters) {
+		this.eraseCookie(this.cookieName);
+	    } else {
+		return;
+	    }
         }
         
         // Check if we are already on the mobile domain
@@ -357,11 +355,16 @@ var detectmobile = {
         }
         return null;
     },
-    /** 
-     * See: http://www.quirksmode.org/js/cookies.html     
+    
+    /**
+     * Remove cookie by name
+     *  
+     * See: http://www.quirksmode.org/js/cookies.html
+     * 
+     * @param {String} name Cookie name
      */
     eraseCookie : function(name) {
-        mobilize.createCookie(name,"",-1);
+        this.createCookie(name,"",-1);
     },
     
 
