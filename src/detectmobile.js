@@ -125,7 +125,7 @@ var detectmobile = {
         // Then check if we need to stick on the web site
         // based on cookie
         if(oldCookie) {
-	    if (this.forceMobileParamter in parameters) {
+	    if (this.forceMobileParameter in parameters) {
 		this.eraseCookie(this.cookieName);
 	    } else {
 		return;
@@ -140,8 +140,8 @@ var detectmobile = {
                 
         // If we are not on the mobile site then we must be on the web site...
         
-        // Do the feature detection
-        if(this.detectMobile()) {
+        // Do the feature detection or check the forced mobile site link
+        if(this.detectMobile() || (this.forceMobileParameter in parameters)) {
              // Based on the feature deteciton this looks like we are on the mobile site
              var url = this.getRedirectTarget("mobile", currentURL);
              this.performRedirect(url);
