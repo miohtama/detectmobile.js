@@ -3,7 +3,8 @@
 Introduction
 --------------
 
-``detectmobile.js`` allows you create intelligent mobile redirects in HTTP cache safe manner.
+``detectmobile.js`` allows you detect mobile browsers, create intelligent mobile redirects in HTTP cache safe manner
+using Javascript.
 
 Use cases
 ----------
