@@ -172,9 +172,23 @@ Impact on the caching
 
 The front end caching servers should be configured to ignore the following cookie::
 
-        detectmobile-stick-on-web
+        detectmobilesticky
         
-This cookie is used by Javascript only. Whether it is present or not should not affect the caching.        
+This cookie is used by Javascript only. 
+
+Whether the cookei is present or not should not affect the caching.
+However, the frontend cache serves are usually configured not to cache any responses with the cookie.
+
+If you are not aware of the situation the following might happen
+
+* Browser loads a page from the server (cached)
+
+* The page contains detectmobile.js
+
+* Browser sets the mobile sticky cookie
+
+* Browser loads the next page from the server. Since HTTP request now contains a cookie, set by Javascript on the previous page, 
+  this request no longer comes from the cache and the further site performance for this particular user is destroyed   
 
 Varnish
 =======
