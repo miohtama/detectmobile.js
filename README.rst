@@ -14,8 +14,8 @@ Use cases
 
 * You want to have page features only for mobile browsers e.g. add download app from the app store links 
 
-Usage
-------------
+How it works
+--------------
 
 The script will take care of the task::
 
