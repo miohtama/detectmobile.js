@@ -354,7 +354,7 @@ Author
 License
 --------
 
-Code: MIT.
+Code: GPL 2.
 
 The generated API documentation falls under GPL 3 license as it has been linked with Ext JS 4.0.
 
