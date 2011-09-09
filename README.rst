@@ -5,28 +5,40 @@ Introduction
 
 ``detectmobile.js`` allows you create intelligent mobile redirects in HTTP cache safe manner.
 
-* Mobile detection is based on the screen size: you use "screens smaller than this diameter" 
-  threshold which is actually the only thing you want to know to send visitors to the small screen optimized site.
-  
-* detectmobile.js is cache friendly, as it is not doing any cache varying by HTTP user agent header
-  or HTTP redirects. Thus, you can safely use any static and anonymous caching with detectmobile.js.
-  
+Use cases
+----------
+
+* You have separate web and mobile site and want to redirect mobile visitors to the  mobile site automatically
+
+* You want to customize the page layout for mobile and CSS is not enough 
+
+* You want to have page features only for mobile browsers e.g. add download app from the app store links 
+
+Usage
+------------
+
 The script will take care of the task::
 
         if user is using a mobile browser and comes to your web site then 
                 go to a matching mobile site page
         else
-                stay on the web site        
-                
-With the default settings the script is set up for the following configuration
+                stay on the web site     
+
+* Mobile detection is based on the screen size: you use "screens smaller than this diameter" 
+  threshold which is actually the only thing you want to know to send visitors to the small screen optimized site.
+  
+* detectmobile.js is cache friendly, as it is not doing any cache varying by HTTP user agent header
+  or HTTP redirects. Thus, you can safely use any static and anonymous caching with detectmobile.js.
+                   
+With the default settings detectmobile.js is set up for the following configuration
 
 * Website is hosted in the address like ``www.site.com`` or ``site.com``
 
-* Mobile site is hosted in the address like ``m.site.com``                
+* Mobile site is hosted in the address like ``m.site.com``     
 
 Benefits
 -------------
-
+         
 Using a Javascript feature based detection over HTTP User-agent header based detection like
 `Wurfl <http://wurfl.sourceforge.net/>`_ offers several benefits
 
@@ -41,13 +53,14 @@ Using a Javascript feature based detection over HTTP User-agent header based det
 * Compatible with any programming language or framework (Python, PHP, 
   C#, ASP.NET, Java, even static HTML files...)
   
-* You can actually undestand the codebase  
+* You can actually understand the codebase  
 
 Requirements
 -------------
 
-You need to be able to control **both** web and mobile site to include detectmobile.js
-Javascript in HTML code.
+You need to be able add new Javascript code on the website.
+
+No changes on the mobile site required, besides adding a back link "Go to full website".
    
 Usage
 ------
@@ -140,11 +153,16 @@ is suspended.
 Link to a mobile site
 ======================
 
-XXX: TODO
-
 This link will clear the sticky cookie and returning clients will 
 automatically redirect to mobile site once again. 
 
+        <a href="yoursite.com/?force-mobile">
+                Mobile site
+        </a>
+        
+The suggested mobile site link place is in the footer or some other non-visible place.
+This link only should concern users who have used "full web site" link and then go back to the mobile site.
+       
 Further info
 ====================
 
