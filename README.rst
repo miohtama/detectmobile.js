@@ -229,6 +229,17 @@ This cookie is only corcern of the client (Javascript) and thus should not be vi
 
 This snippet was created using fabulous `cookie-stripper.sh <http://kristianlyng.wordpress.com/2010/08/13/stripping-cookies-with-vcl>`_.
 
+Quality
+---------------------
+
+The script is on the production usage at least on the following sites
+
+* http://mfabrik.com
+
+* http://www.saariselka.fi
+
+detectmobile.js works with PHP, Python, Wordpress, Joomla, Plone, Django, static HTML5, you name it... no hard dependencies to any backend system.
+
 Questions & support
 ---------------------
 
