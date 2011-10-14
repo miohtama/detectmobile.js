@@ -229,6 +229,21 @@ This cookie is only corcern of the client (Javascript) and thus should not be vi
 
 This snippet was created using fabulous `cookie-stripper.sh <http://kristianlyng.wordpress.com/2010/08/13/stripping-cookies-with-vcl>`_.
 
+Integrations
+---------------------
+
+Below are some examples how to integrate detectmobile.js with various mobile frameworks.
+
+Plone / Web and Mobile
+=========================
+
+`Here <http://groups.google.com/group/gomobile-dev/browse_thread/thread/e09d2362bff279b8>`_ are short integration instructions to
+
+* `Plone <http://plone.org>`
+
+* `Web and Mobile <http://webandmobile.mfabrik.com/>`_
+
+
 Quality
 ---------------------
 
